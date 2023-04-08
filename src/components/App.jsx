@@ -4,7 +4,8 @@ import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
-import { ToastContainer, toast } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 export class App extends Component {
@@ -25,11 +26,14 @@ export class App extends Component {
       contact.name.toLowerCase().includes(name.toLowerCase())
     );
 
-    findContact
-      ? alert(`${name} is already in contact`)
-      : this.setState(({ contacts }) => ({
-          contacts: [contact, ...contacts],
-        }));
+    if (findContact) {
+      toast.error(`${name} is already in contact`);
+    } else {
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+      toast.success(`${name} has been added to contacts`);
+    }
   };
 
   deleteContact = contactId => {
@@ -68,12 +72,10 @@ export class App extends Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          marginTop: 200,
-          height: 100,
           justifyContent: 'center',
           alignItems:'center',
         }}
-      >
+      > 
         <h2>Phonebook</h2>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
@@ -82,13 +84,15 @@ export class App extends Component {
           contacts={visibleContacts}
           onDeleteContact={this.deleteContact}
         />
-        <ToastContainer />
+        <Toaster 
+          position="top-right"
+          reverseOrder={false} />
       </div>
     );
   }
 }
 
-
+export default App;
 
 
 
