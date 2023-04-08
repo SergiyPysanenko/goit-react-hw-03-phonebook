@@ -4,6 +4,7 @@ import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
+import { ToastContainer, toast } from 'react-hot-toast';
 
 
 export class App extends Component {
@@ -81,6 +82,7 @@ export class App extends Component {
           contacts={visibleContacts}
           onDeleteContact={this.deleteContact}
         />
+        <ToastContainer />
       </div>
     );
   }
